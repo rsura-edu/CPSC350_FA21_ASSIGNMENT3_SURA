@@ -3,13 +3,14 @@
 using namespace std;
 
 Map::Map(){
-    mNumRows = 5;
-    mNumColumns = 5;
+    mNumRows = 7;
+    mNumColumns = 7;
     grid = new char*[mNumRows];
     for (int i = 0; i < mNumRows; ++i){
         grid[i] = new char[mNumColumns];
     }
-    // populateMap();
+    makeEmptyMap();
+    populateMap(0.5);
 }
 
 Map::Map(unsigned int numRows, unsigned int numColumns){
@@ -19,6 +20,7 @@ Map::Map(unsigned int numRows, unsigned int numColumns){
     for (int i = 0; i < mNumRows; ++i){
         grid[i] = new char[mNumColumns];
     }
+    makeEmptyMap();
 }
 
 Map::Map(string fileName){
@@ -44,7 +46,11 @@ Map::Map(string fileName){
             int currRow = 0;
             while (getline (fileReader,fileLine)) {
                 for (int i = 0; i < mNumColumns; ++i) {
-                    grid[currRow][i] = fileLine[i];
+                    if (fileLine[i] == '-' || toupper(fileLine[i]) == 'X') {
+                        grid[currRow][i] = toupper(fileLine[i]);
+                    } else {
+                        throw runtime_error("ERROR: INVALID FILE INPUT");
+                    }
                 }
                 ++currRow;
             }
@@ -55,6 +61,7 @@ Map::Map(string fileName){
         }
         fileReader.close();
     } catch (runtime_error &exception){
+        cerr << exception.what() << endl;
         cerr << "The file had invalid inputs. Please make sure that the following are true:" << endl;
         cerr << "1. The first line is a single positive integer representing the length of the row" << endl;
         cerr << "2. The second line is a single positive integer representing the length of the column" << endl;
@@ -69,26 +76,33 @@ Map::~Map(){
     delete [] grid; // deletes overall array
 }
 
-char** Map::getMap(){
-    char** returnedGrid = new char*[mNumRows];
-    for (int i = 0; i < mNumRows; ++i){
-        returnedGrid[i] = new char[mNumColumns];
+// char** Map::getMap(){
+//     char** returnedGrid = new char*[mNumRows];
+//     for (int i = 0; i < mNumRows; ++i){
+//         returnedGrid[i] = new char[mNumColumns];
+//         for (int j = 0; j < mNumColumns; ++j) {
+//             returnedGrid[i][j] = grid[i][j];
+//         }
+//     }
+//     return returnedGrid;
+//
+//     return grid;
+// }
+
+string Map::getMapString(){
+    string mapStr = "";
+    for (int i = 0; i < mNumRows; ++i) {
         for (int j = 0; j < mNumColumns; ++j) {
-            returnedGrid[i][j] = grid[i][j];
+            mapStr += grid[i][j];
         }
+        mapStr += "\n";
     }
-    return returnedGrid;
+    mapStr = mapStr.substr(0, mapStr.length() - 1); // removes last '\n' character
+    return mapStr;
 }
 
 void Map::print(){
-    string map = "";
-    for (int i = 0; i < mNumRows; ++i) {
-        for (int j = 0; j < mNumColumns; ++j) {
-            map += grid[i][j];
-        }
-        map += "\n";
-    }
-    cout << map << endl;
+    cout << getMapString() << endl;
 }
 
 void Map::makeEmptyMap(){
@@ -100,18 +114,32 @@ void Map::makeEmptyMap(){
 }
 
 void Map::populateMap(double popDensity){
-    int totCells = round(popDensity * mNumRows * mNumColumns);
+    makeEmptyMap();
+    int totCells = round((popDensity * mNumRows) * mNumColumns);
     int currentlyFilled = 0;
     int randomRow;
     int randomColumn;
     while (currentlyFilled < totCells) {
-        randomRow = round(rand() * mNumRows);
-        randomColumn = round(rand() * mNumColumns);
+        randomRow = floor(rand() % mNumRows);
+        randomColumn = floor(rand() % mNumColumns);
         if (grid[randomRow][randomColumn] == '-') {
             grid[randomRow][randomColumn] = 'X';
             ++currentlyFilled;
         }
     }
+}
+
+void Map::updateGrid(int rowNum, int columnNum, char val){
+    if ((rowNum > -1 && rowNum < mNumRows) && (columnNum > -1 && columnNum < mNumColumns) && (val == '-' || toupper(val) == 'X')) {
+        grid[rowNum][columnNum] = toupper(val);
+        return;
+    } else {
+        cerr << "Not a valid way to update the grid" << endl;
+    }
+}
+
+char Map::getGridElement(int rowNum, int columnNum){
+    return grid[rowNum][columnNum];
 }
 
 unsigned int Map::getNumRows(){
@@ -122,17 +150,10 @@ unsigned int Map::getNumColumns(){
     return mNumColumns;
 }
 
-bool Map::operator==(Map secondMap){
-    if (secondMap.getNumRows() != mNumRows || secondMap.getNumColumns() != mNumColumns) {
-        return false;
-    }
-    char** secondMapMatrix = secondMap.getMap();
-    for (int i = 0; i < mNumRows; ++i) {
-        for (int j = 0; j < mNumColumns; ++j) {
-            if (grid[i][j] != secondMapMatrix[i][j]) {
-                return false;
-            }
-        }
-    }
-    return true;
+bool Map::isEqual(Map*& secondMap){
+    return (getMapString() == secondMap->getMapString());
+}
+
+bool Map::isEqual(Map& secondMap){
+    return (getMapString() == secondMap.getMapString());
 }

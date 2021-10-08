@@ -14,18 +14,20 @@ class Map{
         Map(unsigned int numRows, unsigned int numColumns);
         Map(string fileName);
         ~Map();
-        char** getMap(); // gets map in string form
+        // char** getMap(); // gets map
+        string getMapString(); // gets map in a string
         void print(); // prints the map
         void populateMap(double popDensity);
+        void updateGrid(int rowNum, int columnNum, char val);
+        char getGridElement(int rowNum, int columnNum);
         unsigned int getNumRows();
         unsigned int getNumColumns();
-        // // ADD MORE FUNCTIONS MAYBE
-        bool operator==(Map secondMap); // checks if two maps are equal
-
+        bool isEqual(Map*& secondMap);
+        bool isEqual(Map& secondMap);
+        void makeEmptyMap();
 
     private:
-        void makeEmptyMap();
-        char** grid; // had to make this public to check if two maps are equal
+        char** grid;
         unsigned int mNumRows;
         unsigned int mNumColumns;
 

@@ -1,14 +1,16 @@
-#ifndef DOUGHNUTMODE_H
-#define DOUGHNUTMODE_H
-
-class DoughnutMode : public GenericGame{
-    public:
-        DoughnutMode();
-        DoughnutMode(unsigned int rowLength, unsigned int columnLength, unsigned double popDensity);
-        DoughnutMode(string fileName);
-        ~DoughnutMode();
-    private:
-        char** bufferGrid;
-};
-
-#endif
+// #ifndef DOUGHNUTMODE_H
+// #define DOUGHNUTMODE_H
+//
+// #include <iostream>
+// #include <fstream>
+// #include "GenericGame.h"
+//
+// class DoughnutMode : public GenericGame{
+//     public:
+//         DoughnutMode();
+//         DoughnutMode(unsigned int numRows, unsigned int numColumns, double popDensity);
+//         DoughnutMode(string fileName);
+//         ~DoughnutMode();
+// };
+//
+// #endif
