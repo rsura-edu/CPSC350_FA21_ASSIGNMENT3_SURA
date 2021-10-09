@@ -9,6 +9,8 @@ class MirrorMode : public GenericGame{
         MirrorMode(unsigned int numRows, unsigned int numColumns, double popDensity);
         MirrorMode(string fileName);
         ~MirrorMode();
+    private:
+        void generateBufferedGrid(Map*& smallerGrid) const;
 };
 
 #endif

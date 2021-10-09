@@ -5,6 +5,8 @@
 #include <fstream>
 #include <math.h>
 #include <stdlib.h>
+#include <exception>
+#include <stdexcept>
 
 using namespace std;
 

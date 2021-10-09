@@ -119,7 +119,6 @@ void Map::populateMap(double popDensity){
 void Map::updateGrid(int rowNum, int columnNum, char val){
     if ((rowNum > -1 && rowNum < mNumRows) && (columnNum > -1 && columnNum < mNumColumns) && (val == '-' || toupper(val) == 'X')) {
         grid[rowNum][columnNum] = toupper(val);
-        return;
     } else {
         cerr << "Not a valid way to update the grid" << endl;
     }

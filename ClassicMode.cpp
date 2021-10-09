@@ -1,6 +1,7 @@
 #include "ClassicMode.h"
 
 using namespace std;
+
 ClassicMode::ClassicMode() : GenericGame::GenericGame(){
     createNextGen(mGenOne, mGenTwo);
     createNextGen(mGenTwo,mGenThree);
@@ -27,9 +28,9 @@ ClassicMode::~ClassicMode(){
 
 void ClassicMode::generateBufferedGrid(Map*& smallerGrid) const{
     bufferGrid->makeEmptyMap();
-    for (int i = 0; i < smallerGrid->getNumRows(); i++) {
-        for (int j = 0; j < smallerGrid->getNumColumns(); j++) {
-            bufferGrid->updateGrid(i+1,j+1,smallerGrid->getGridElement(i,j));
+    for (int i = 0; i < smallerGrid->getNumRows(); ++i) {
+        for (int j = 0; j < smallerGrid->getNumColumns(); ++j) {
+            bufferGrid->updateGrid(i+1, j+1, smallerGrid->getGridElement(i,j));
         }
     }
 }

@@ -24,10 +24,11 @@ GenericGame::GenericGame(unsigned int numRows, unsigned int numColumns, double p
 GenericGame::GenericGame(string fileName){
     currGen = 4;
     mGenOne = new Map(fileName);
+    mGenOne->print();
     bufferGrid = new Map(mGenOne->getNumRows() + 2, mGenOne->getNumColumns() + 2);
-    mGenTwo = new Map(fileName);
-    mGenThree = new Map(fileName);
-    mGenFour = new Map(fileName);
+    mGenTwo = new Map(mGenOne->getNumRows(), mGenOne->getNumColumns());
+    mGenThree = new Map(mGenOne->getNumRows(), mGenOne->getNumColumns());
+    mGenFour = new Map(mGenOne->getNumRows(), mGenOne->getNumColumns());
 }
 
 void GenericGame::play() {
@@ -57,33 +58,30 @@ void GenericGame::play() {
 
 bool GenericGame::isStable() const{
 
-    if (mGenThree != NULL && mGenFour != NULL) {
-        if (mGenTwo != NULL) {
-            if (mGenOne != NULL) {
-                if (mGenOne->getMapString() == mGenFour->getMapString() ||
-                    mGenTwo->getMapString() == mGenFour->getMapString() ||
-                    mGenThree->getMapString() == mGenFour->getMapString()){
-                    return true;
-                }
-            } else {
-                if (mGenTwo->getMapString() == mGenFour->getMapString() ||
-                    mGenThree->getMapString() == mGenFour->getMapString()){
-                    return true;
-                }
-            }
-        } else {
-            if (mGenThree->getMapString() == mGenFour->getMapString()){
-                return true;
-            }
+    if(mGenOne != NULL && mGenTwo != NULL && mGenThree != NULL && mGenFour != NULL){
+        if (mGenOne->getMapString() == mGenFour->getMapString() ||
+            mGenTwo->getMapString() == mGenFour->getMapString() ||
+            mGenThree->getMapString() == mGenFour->getMapString()){
+            return true;
+        }
+    } else if (mGenTwo != NULL && mGenThree != NULL && mGenFour != NULL){
+        if (mGenTwo->getMapString() == mGenFour->getMapString() ||
+            mGenThree->getMapString() == mGenFour->getMapString()){
+            return true;
+        }
+    } else if (mGenThree != NULL && mGenFour != NULL) {
+        if (mGenThree->getMapString() == mGenFour->getMapString()){
+            return true;
         }
     }
+    return false;
 }
 
 void GenericGame::createNextGen(Map*& oldGen, Map*& newGen) const{
     generateBufferedGrid(oldGen);
     int currCellNeighbors = 0;
-    for (int i = 0; i < newGen->getNumRows(); i++) {
-        for (int j = 0; j < newGen->getNumColumns(); j++) {
+    for (int i = 0; i < newGen->getNumRows(); ++i) {
+        for (int j = 0; j < newGen->getNumColumns(); ++j) {
             currCellNeighbors = countNeighbors(i + 1, j + 1);
             if (currCellNeighbors == 0 || currCellNeighbors == 1) {
                 newGen->updateGrid(i,j,'-');
@@ -114,7 +112,6 @@ int GenericGame::countNeighbors(int rowNum, int columnNum) const{
     if (bufferGrid->getGridElement(rowNum + 1, columnNum + 1) == 'X') {++numNeighbors;}
     return numNeighbors;
 }
-
 
 void GenericGame::consoleWithPause() {
     double numSeconds = 0.1;
