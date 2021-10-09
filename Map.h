@@ -14,7 +14,6 @@ class Map{
         Map(unsigned int numRows, unsigned int numColumns);
         Map(string fileName);
         ~Map();
-        // char** getMap(); // gets map
         string getMapString(); // gets map in a string
         void print(); // prints the map
         void populateMap(double popDensity);
@@ -22,8 +21,6 @@ class Map{
         char getGridElement(int rowNum, int columnNum);
         unsigned int getNumRows();
         unsigned int getNumColumns();
-        bool isEqual(Map*& secondMap);
-        bool isEqual(Map& secondMap);
         void makeEmptyMap();
 
     private:

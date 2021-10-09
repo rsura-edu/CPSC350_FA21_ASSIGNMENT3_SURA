@@ -76,19 +76,6 @@ Map::~Map(){
     delete [] grid; // deletes overall array
 }
 
-// char** Map::getMap(){
-//     char** returnedGrid = new char*[mNumRows];
-//     for (int i = 0; i < mNumRows; ++i){
-//         returnedGrid[i] = new char[mNumColumns];
-//         for (int j = 0; j < mNumColumns; ++j) {
-//             returnedGrid[i][j] = grid[i][j];
-//         }
-//     }
-//     return returnedGrid;
-//
-//     return grid;
-// }
-
 string Map::getMapString(){
     string mapStr = "";
     for (int i = 0; i < mNumRows; ++i) {
@@ -148,12 +135,4 @@ unsigned int Map::getNumRows(){
 
 unsigned int Map::getNumColumns(){
     return mNumColumns;
-}
-
-bool Map::isEqual(Map*& secondMap){
-    return (getMapString() == secondMap->getMapString());
-}
-
-bool Map::isEqual(Map& secondMap){
-    return (getMapString() == secondMap.getMapString());
 }

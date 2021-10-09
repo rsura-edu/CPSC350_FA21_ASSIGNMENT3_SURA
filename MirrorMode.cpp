@@ -1,3 +1,3 @@
-// #include "MirrorMode.h"
-//
-// using namespace std;
+#include "MirrorMode.h"
+
+using namespace std;
