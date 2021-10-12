@@ -1,3 +1,13 @@
+/**
+ * Header File: Map.h
+ *
+ * Full Name: Rahul Sura
+ * Student ID: 2371308
+ * Chapman email: sura@chapman.edu
+ * Course: CPSC 350-03
+ * Assignment: Assignment 3
+ */
+
 #ifndef MAP_H
 #define MAP_H
 
@@ -5,6 +15,7 @@
 #include <fstream>
 #include <math.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <exception>
 #include <stdexcept>
 
@@ -24,11 +35,15 @@ class Map{
         unsigned int getNumRows();
         unsigned int getNumColumns();
         void makeEmptyMap();
-
+        bool isValidFile(string fileName);
     private:
+
+        bool isValidLine(string fileLine);
+
         char** grid;
         unsigned int mNumRows;
         unsigned int mNumColumns;
+        string mFileName;
 
 };
 

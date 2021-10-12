@@ -1,3 +1,13 @@
+/**
+ * Header File: ClassicMode.h
+ *
+ * Full Name: Rahul Sura
+ * Student ID: 2371308
+ * Chapman email: sura@chapman.edu
+ * Course: CPSC 350-03
+ * Assignment: Assignment 3
+ */
+
 #ifndef CLASSICMODE_H
 #define CLASSICMODE_H
 

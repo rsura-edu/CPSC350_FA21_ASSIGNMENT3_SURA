@@ -1,17 +1,19 @@
+/**
+ * Main Implementation File: main.cpp
+ *
+ * Full Name: Rahul Sura
+ * Student ID: 2371308
+ * Chapman email: sura@chapman.edu
+ * Course: CPSC 350-03
+ * Assignment: Assignment 3
+ */
 #include "ClassicMode.h"
 #include "DoughnutMode.h"
 #include "MirrorMode.h"
 
 using namespace std;
 
-void toLowerCase(string &s){
-    for (int i = 0; i < s.length(); i++) {
-        s[i] = tolower(s[i]);
-    }
-}
-
 int main(int argc, char** argv) {
-
     cout << "Hello! Welcome to the Game of Life!" << endl;
     cout << "-----------------------------------" << endl;
 
@@ -29,7 +31,9 @@ int main(int argc, char** argv) {
         cout << "If you want a flat-file configuration, please type \"file\" into the prompt and hit enter on your keyboard." << endl;
         cout << "---->\t";
         getline (cin, randOrFile);
-        toLowerCase(randOrFile);
+        for (int i = 0; i < randOrFile.length(); i++) {
+            randOrFile[i] = tolower(randOrFile[i]);
+        }
         if (!(randOrFile == "random" || randOrFile == "file")) {
             cout << "Sorry, that wasn't one of the options. Instructions will be repeated again." << endl;
         }
@@ -94,47 +98,68 @@ int main(int argc, char** argv) {
         cout << "If you want mirror mode, please type \"mirror\" into the prompt and hit enter on your keyboard." << endl;
         cout << "---->\t";
         getline (cin, boundaryMode);
-        toLowerCase(boundaryMode);
+        for (int i = 0; i < boundaryMode.length(); i++) {
+            boundaryMode[i] = tolower(boundaryMode[i]);
+        }
         if (!(boundaryMode == "classic" || boundaryMode == "doughnut" || boundaryMode == "mirror")) {
             cout << "Sorry, that wasn't one of the options. Instructions will be repeated again." << endl;
         }
     }
 
     if (boundaryMode == "classic") {
-        ClassicMode *cm;
         if (numRows > 0) {
-            cm = new ClassicMode(numRows, numColumns, popDensity);
+            ClassicMode* cm = new ClassicMode(numRows, numColumns, popDensity);
+            cm->play();
+            delete cm;
         } else if (fileName != ""){
-            cm = new ClassicMode(fileName);
+            try {
+                ClassicMode* cm = new ClassicMode(fileName);
+                cm->play();
+                delete cm;
+            } catch (runtime_error &exception){
+                cerr << exception.what() << endl;
+            }
         } else {
-            cm = new ClassicMode();
+            ClassicMode* cm = new ClassicMode();
+            cm->play();
+            delete cm;
         }
-        cm->play();
-        delete cm;
-    }
-    else if (boundaryMode == "doughnut"){
-        DoughnutMode *dm;
+    } else if (boundaryMode == "doughnut") {
         if (numRows > 0) {
-            dm = new DoughnutMode(numRows, numColumns, popDensity);
+            DoughnutMode* dm = new DoughnutMode(numRows, numColumns, popDensity);
+            dm->play();
+            delete dm;
         } else if (fileName != ""){
-            dm = new DoughnutMode(fileName);
+            try {
+                DoughnutMode* dm = new DoughnutMode(fileName);
+                dm->play();
+                delete dm;
+            } catch (runtime_error &exception){
+                cerr << exception.what() << endl;
+            }
         } else {
-            dm = new DoughnutMode(5, 5, 0.5);
+            DoughnutMode* dm = new DoughnutMode();
+            dm->play();
+            delete dm;
         }
-        dm->play();
-        delete dm;
-    }
-    else if (boundaryMode == "mirror"){
-        MirrorMode *mm;
+    } else if (boundaryMode == "mirror") {
         if (numRows > 0) {
-            mm = new MirrorMode(numRows, numColumns, popDensity);
+            MirrorMode* mm = new MirrorMode(numRows, numColumns, popDensity);
+            mm->play();
+            delete mm;
         } else if (fileName != ""){
-            mm = new MirrorMode(fileName);
+            try {
+                MirrorMode* mm = new MirrorMode(fileName);
+                mm->play();
+                delete mm;
+            } catch (runtime_error &exception){
+                cerr << exception.what() << endl;
+            }
         } else {
-            mm = new MirrorMode();
+            MirrorMode* mm = new MirrorMode();
+            mm->play();
+            delete mm;
         }
-        mm->play();
-        delete mm;
     }
 
     return 0;

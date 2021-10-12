@@ -23,8 +23,16 @@ GenericGame::GenericGame(unsigned int numRows, unsigned int numColumns, double p
 
 GenericGame::GenericGame(string fileName){
     currGen = 4;
-    mGenOne = new Map(fileName);
-    mGenOne->print();
+    try{
+        mGenOne = new Map(fileName);
+    } catch (invalid_argument &exception){
+        string runtimeMessage = "ERROR: INVALID FILE INPUT";
+        runtimeMessage += "\nThe file had invalid inputs. Please make sure that the following are true:";
+        runtimeMessage += "\n\t1. The first line is a single positive integer representing the length of the row";
+        runtimeMessage += "\n\t2. The second line is a single positive integer representing the length of the column";
+        runtimeMessage += "\n\t3. The grid has the same dimensions as stated in lines 1 and 2 and contains ONLY a \'X\' or a \'-\' for each character";
+        throw runtime_error(runtimeMessage);
+    }
     bufferGrid = new Map(mGenOne->getNumRows() + 2, mGenOne->getNumColumns() + 2);
     mGenTwo = new Map(mGenOne->getNumRows(), mGenOne->getNumColumns());
     mGenThree = new Map(mGenOne->getNumRows(), mGenOne->getNumColumns());
@@ -145,6 +153,8 @@ void GenericGame::consoleWithPause() {
         ++currGen;
         usleep((long)(numSeconds * 1000000));
     }
+    cout << "\nThe grid of cells has stabilized. Please press enter on your keyboard to exit the program" << endl;
+    cin.ignore();
 }
 
 void GenericGame::consoleWithEnter() {
@@ -162,9 +172,9 @@ void GenericGame::consoleWithEnter() {
 
     cout << "\nGeneration 3:" << endl;
     mGenFour->print();
-    cin.ignore();
 
     while(!isStable()){
+        cin.ignore();
         Map* tempMap = mGenOne;
         mGenOne = mGenTwo;
         mGenTwo = mGenThree;
@@ -175,8 +185,10 @@ void GenericGame::consoleWithEnter() {
         cout << "\nGeneration " << currGen << ":" << endl;
         mGenFour->print();
         ++currGen;
-        cin.ignore();
     }
+
+    cout << "\nThe grid of cells has stabilized. Please press enter on your keyboard to exit the program" << endl;
+    cin.ignore();
 }
 
 void GenericGame::fileOutput() {
@@ -206,7 +218,7 @@ void GenericGame::fileOutput() {
         mGenTwo = mGenThree;
         mGenThree = mGenFour;
         mGenFour = new Map(mGenTwo->getNumRows(), mGenTwo->getNumColumns());
-        createNextGen(mGenTwo, mGenThree);
+        createNextGen(mGenThree, mGenFour);
         delete tempMap;
         fileWriter << "\nGeneration " << currGen << ":" << endl;
         fileWriter << mGenFour->getMapString() << endl;
@@ -215,4 +227,6 @@ void GenericGame::fileOutput() {
 
     cout << "Successfully created file!" << endl;
     cout << "Please check the folder where the executable was located to find the text file: \"" << fileName << "\"" << endl;
+    cout << "\nThe grid of cells has stabilized. Please press enter on your keyboard to exit the program" << endl;
+    cin.ignore();
 }

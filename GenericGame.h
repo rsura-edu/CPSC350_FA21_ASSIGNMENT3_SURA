@@ -1,9 +1,16 @@
+/**
+ * Header File: GenericGame.h
+ *
+ * Full Name: Rahul Sura
+ * Student ID: 2371308
+ * Chapman email: sura@chapman.edu
+ * Course: CPSC 350-03
+ * Assignment: Assignment 3
+ */
+
 #ifndef GENERICGAME_H
 #define GENERICGAME_H
 
-#include <iostream>
-#include <fstream>
-#include <unistd.h>
 #include "Map.h"
 using namespace std;
 
@@ -16,7 +23,7 @@ class GenericGame{
         void play(); // starts the game
     protected:
         bool isStable() const; // checks if the map has stabilized
-        void createNextGen(Map*& oldGen, Map*& newGen) const; // Creates next generation
+        void createNextGen(Map*& oldGen, Map*& newGen) ; // Creates next generation
         void consoleWithPause();
         void consoleWithEnter();
         void fileOutput();
