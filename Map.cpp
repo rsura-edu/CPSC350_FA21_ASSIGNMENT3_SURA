@@ -1,3 +1,12 @@
+/**
+ * Implementation File: Map.cpp
+ *
+ * Full Name: Rahul Sura
+ * Student ID: 2371308
+ * Chapman email: sura@chapman.edu
+ * Course: CPSC 350-03
+ * Assignment: Assignment 3
+ */
 #include "Map.h"
 
 using namespace std;
@@ -30,7 +39,7 @@ Map::Map(string fileName){
     fileReader.open(fileName);
 
     if(!fileReader.is_open()){
-        string runtimeMessage = "Oops! No file found with the name of \"" + fileName + "\"\n";
+        string runtimeMessage = "ERROR: No file found with the name of \"" + fileName + "\"\n";
         runtimeMessage += "Please check if the file is in the wrong directory, has the proper reading permissions or if you have provided the extension for the file name";
         throw runtime_error(runtimeMessage);
     } else {
@@ -74,7 +83,7 @@ Map::Map(string fileName){
 
 Map::~Map(){
     if ((mNumRows > 0 && mNumColumns > 0 && grid != NULL) || (mFileName != "" && isValidFile(mFileName))) {
-        for (int i = 0; i < mNumRows; ++i){ // deletes each sub array in the 2d arrat
+        for (int i = 0; i < mNumRows; ++i){ // deletes each sub array in the 2d array
             if (grid[i] != NULL) {
                 delete [] grid[i];
             }
@@ -114,8 +123,8 @@ void Map::populateMap(double popDensity){
     int randomRow;
     int randomColumn;
     while (currentlyFilled < totCells) {
-        randomRow = floor(rand() % mNumRows);
-        randomColumn = floor(rand() % mNumColumns);
+        randomRow = rand() % mNumRows;
+        randomColumn = rand() % mNumColumns;
         if (grid[randomRow][randomColumn] == '-') {
             grid[randomRow][randomColumn] = 'X';
             ++currentlyFilled;
@@ -152,7 +161,14 @@ bool Map::isValidFile(string fileName){
             return false;
         }
     }
-    numRows = stoi(fileLine);
+
+    try{ // even if the line is a number, it should be an integer (not larger than the integer limit)
+        numRows = stoi(fileLine);
+    } catch(invalid_argument &exception) {
+        return false;
+    }
+
+    mNumRows = numRows;
 
     getline(fileReader, fileLine);
     if (fileLine.empty()) {
@@ -166,8 +182,12 @@ bool Map::isValidFile(string fileName){
         }
     }
 
-    mNumRows = numRows;
-    mNumColumns = stoi(fileLine);
+    try{ // even if the line is a number, it should be an integer (not larger than the integer limit)
+        mNumColumns = stoi(fileLine);
+    } catch(invalid_argument &exception) {
+        return false;
+    }
+
 
     int currRow = 0;
     while (getline (fileReader,fileLine)) {

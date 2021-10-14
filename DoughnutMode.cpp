@@ -1,3 +1,12 @@
+/**
+ * Implementation File: DoughnutMode.cpp
+ *
+ * Full Name: Rahul Sura
+ * Student ID: 2371308
+ * Chapman email: sura@chapman.edu
+ * Course: CPSC 350-03
+ * Assignment: Assignment 3
+ */
 #include "DoughnutMode.h"
 
 using namespace std;

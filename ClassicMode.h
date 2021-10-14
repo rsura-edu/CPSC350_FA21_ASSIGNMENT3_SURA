@@ -8,18 +8,21 @@
  * Assignment: Assignment 3
  */
 
-#ifndef CLASSICMODE_H
+#ifndef CLASSICMODE_H // header guards
 #define CLASSICMODE_H
 
 #include "GenericGame.h"
 
-class ClassicMode : public GenericGame{
+class ClassicMode : public GenericGame{ // ClassicMode inheriting from abstract GenericGame
     public:
-        ClassicMode();
-        ClassicMode(unsigned int numRows, unsigned int numColumns, double popDensity);
-        ClassicMode(string fileName);
-        ~ClassicMode();
+        ClassicMode(); // default constructor - shouldn't be used in general
+        ClassicMode(unsigned int numRows, unsigned int numColumns, double popDensity); // new ClassicMode based on number of rows and columns and population density
+        ClassicMode(string fileName); // new ClassicMode based on file name
+        ~ClassicMode(); // destructor implemented here, in the sub class, instead of the abstract class, GenericGame
+
     private:
+        // implemented here, in the sub class, instead of the abstract class, GenericGame
+        // creates the bufferGrid based on the rules of ClassicMode
         void generateBufferedGrid(Map*& smallerGrid) const;
 };
 

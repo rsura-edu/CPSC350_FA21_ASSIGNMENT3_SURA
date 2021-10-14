@@ -1,3 +1,12 @@
+/**
+ * Implementation File: GenericGame.cpp
+ *
+ * Full Name: Rahul Sura
+ * Student ID: 2371308
+ * Chapman email: sura@chapman.edu
+ * Course: CPSC 350-03
+ * Assignment: Assignment 3
+ */
 #include "GenericGame.h"
 
 using namespace std;
@@ -90,7 +99,7 @@ void GenericGame::createNextGen(Map*& oldGen, Map*& newGen) const{
     int currCellNeighbors = 0;
     for (int i = 0; i < newGen->getNumRows(); ++i) {
         for (int j = 0; j < newGen->getNumColumns(); ++j) {
-            currCellNeighbors = countNeighbors(i + 1, j + 1);
+            currCellNeighbors = countInternalNeighbors(i + 1, j + 1);
             if (currCellNeighbors == 0 || currCellNeighbors == 1) {
                 newGen->updateGrid(i,j,'-');
             } else if (currCellNeighbors == 2) {
@@ -108,7 +117,7 @@ void GenericGame::createNextGen(Map*& oldGen, Map*& newGen) const{
 }
 
 
-int GenericGame::countNeighbors(int rowNum, int columnNum) const{
+int GenericGame::countInternalNeighbors(int rowNum, int columnNum) const{
     int numNeighbors = 0;
     if (bufferGrid->getGridElement(rowNum - 1, columnNum - 1) == 'X') {++numNeighbors;}
     if (bufferGrid->getGridElement(rowNum - 1, columnNum) == 'X') {++numNeighbors;}
@@ -124,19 +133,19 @@ int GenericGame::countNeighbors(int rowNum, int columnNum) const{
 void GenericGame::consoleWithPause() {
     double numSeconds = 0.1;
 
-    cout << "Generation 0:" << endl;
+    cout << "Generation 0" << endl;
     mGenOne->print();
     usleep((long)(numSeconds * 1000000));
 
-    cout << "\nGeneration 1:" << endl;
+    cout << "\nGeneration 1" << endl;
     mGenTwo->print();
     usleep((long)(numSeconds * 1000000));
 
-    cout << "\nGeneration 2:" << endl;
+    cout << "\nGeneration 2" << endl;
     mGenThree->print();
     usleep((long)(numSeconds * 1000000));
 
-    cout << "\nGeneration 3:" << endl;
+    cout << "\nGeneration 3" << endl;
     mGenFour->print();
     usleep((long)(numSeconds * 1000000));
 
@@ -148,7 +157,7 @@ void GenericGame::consoleWithPause() {
         mGenFour = new Map(mGenTwo->getNumRows(), mGenTwo->getNumColumns());
         createNextGen(mGenThree, mGenFour);
         delete tempMap;
-        cout << "\nGeneration " << currGen << ":" << endl;
+        cout << "\nGeneration " << currGen << endl;
         mGenFour->print();
         ++currGen;
         usleep((long)(numSeconds * 1000000));
@@ -158,19 +167,19 @@ void GenericGame::consoleWithPause() {
 }
 
 void GenericGame::consoleWithEnter() {
-    cout << "Generation 0:" << endl;
+    cout << "Generation 0" << endl;
     mGenOne->print();
     cin.ignore();
 
-    cout << "\nGeneration 1:" << endl;
+    cout << "Generation 1" << endl;
     mGenTwo->print();
     cin.ignore();
 
-    cout << "\nGeneration 2:" << endl;
+    cout << "Generation 2" << endl;
     mGenThree->print();
     cin.ignore();
 
-    cout << "\nGeneration 3:" << endl;
+    cout << "Generation 3" << endl;
     mGenFour->print();
 
     while(!isStable()){
@@ -182,7 +191,7 @@ void GenericGame::consoleWithEnter() {
         mGenFour = new Map(mGenTwo->getNumRows(), mGenTwo->getNumColumns());
         createNextGen(mGenThree, mGenFour);
         delete tempMap;
-        cout << "\nGeneration " << currGen << ":" << endl;
+        cout << "Generation " << currGen << endl;
         mGenFour->print();
         ++currGen;
     }
@@ -200,16 +209,16 @@ void GenericGame::fileOutput() {
     ofstream fileWriter;
     fileWriter.open(fileName);
 
-    fileWriter << "Generation 0:" << endl;
+    fileWriter << "Generation 0" << endl;
     fileWriter << mGenOne->getMapString() << endl;
 
-    fileWriter << "\nGeneration 1:" << endl;
+    fileWriter << "\nGeneration 1" << endl;
     fileWriter << mGenTwo->getMapString() << endl;
 
-    fileWriter << "\nGeneration 2:" << endl;
+    fileWriter << "\nGeneration 2" << endl;
     fileWriter << mGenThree->getMapString() << endl;
 
-    fileWriter << "\nGeneration 3:" << endl;
+    fileWriter << "\nGeneration 3" << endl;
     fileWriter << mGenFour->getMapString() << endl;
 
     while(!isStable()){
@@ -220,7 +229,7 @@ void GenericGame::fileOutput() {
         mGenFour = new Map(mGenTwo->getNumRows(), mGenTwo->getNumColumns());
         createNextGen(mGenThree, mGenFour);
         delete tempMap;
-        fileWriter << "\nGeneration " << currGen << ":" << endl;
+        fileWriter << "\nGeneration " << currGen << endl;
         fileWriter << mGenFour->getMapString() << endl;
         ++currGen;
     }

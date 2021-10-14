@@ -1,3 +1,12 @@
+/**
+ * Implementation File: MirrorMode.cpp
+ *
+ * Full Name: Rahul Sura
+ * Student ID: 2371308
+ * Chapman email: sura@chapman.edu
+ * Course: CPSC 350-03
+ * Assignment: Assignment 3
+ */
 #include "MirrorMode.h"
 
 using namespace std;
