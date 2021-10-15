@@ -152,18 +152,13 @@ void GenericGame::createNextGen(Map*& oldGen, Map*& newGen) const{
 }
 
 /**
- * Helper function - Counts the number of neighbors for internal cells only, which means if the function is called
- * for cells that are on the edge of the map, it will return -1
+ * Helper function - Counts the number of neighbors for internal cells only
  *
  * @param an int representing the row number (0 indexed)
  * @param an int representing the column number (0 indexed)
  * @return an int representing the number of neighbors for the internal cell
  */
 int GenericGame::countInternalNeighbors(int rowNum, int columnNum) const{
-    // doesn't allow any cell that's on the edge of the map to have its neighbors counted (implemented this way because a buffered grid is used)
-    if (rowNum <= 0 || columnNum <= 0 || rowNum >= mGenOne->getNumRows() - 1 || columnNum >= mGenOne->getNumRows() - 1 ) {
-        return -1;
-    }
     int numNeighbors = 0;
     if (bufferGrid->getGridElement(rowNum - 1, columnNum - 1) == 'X') {++numNeighbors;} // top left neighbor
     if (bufferGrid->getGridElement(rowNum - 1, columnNum) == 'X') {++numNeighbors;} // neighbor directly above
