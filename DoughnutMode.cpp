@@ -16,9 +16,10 @@ using namespace std;
  * Creates a doughnut mode simulation where the starting map is a default 7 x 7 map with a population density of 0.5
  */
 DoughnutMode::DoughnutMode() : GenericGame::GenericGame(){
+    // Creates mGenTwo, mGenThree, and mGenFour based off of previous generations
     createNextGen(mGenOne, mGenTwo);
-    createNextGen(mGenTwo,mGenThree);
-    createNextGen(mGenThree,mGenFour);
+    createNextGen(mGenTwo ,mGenThree);
+    createNextGen(mGenThree, mGenFour);
 }
 
 /**
@@ -30,9 +31,10 @@ DoughnutMode::DoughnutMode() : GenericGame::GenericGame(){
  * @param a double representing population density
  */
 DoughnutMode::DoughnutMode(unsigned int numRows, unsigned int numColumns, double popDensity) : GenericGame::GenericGame(numRows, numColumns, popDensity){
+    // Creates mGenTwo, mGenThree, and mGenFour based off of previous generations
     createNextGen(mGenOne, mGenTwo);
-    createNextGen(mGenTwo,mGenThree);
-    createNextGen(mGenThree,mGenFour);
+    createNextGen(mGenTwo, mGenThree);
+    createNextGen(mGenThree, mGenFour);
 }
 
 /**
@@ -42,15 +44,17 @@ DoughnutMode::DoughnutMode(unsigned int numRows, unsigned int numColumns, double
  * @param a string representing the file name
  */
 DoughnutMode::DoughnutMode(string fileName) : GenericGame::GenericGame(fileName){
+    // Creates mGenTwo, mGenThree, and mGenFour based off of previous generations
     createNextGen(mGenOne, mGenTwo);
-    createNextGen(mGenTwo,mGenThree);
-    createNextGen(mGenThree,mGenFour);
+    createNextGen(mGenTwo, mGenThree);
+    createNextGen(mGenThree, mGenFour);
 }
 
 /**
  * Destructor - deleting all the maps of the last four generations and the buffered grid
  */
 DoughnutMode::~DoughnutMode(){
+    // deletes all maps
     delete mGenOne;
     delete mGenTwo;
     delete mGenThree;
@@ -64,24 +68,27 @@ DoughnutMode::~DoughnutMode(){
  * @param a Map
  */
 void DoughnutMode::generateBufferedGrid(Map*& smallerGrid) const{
-    bufferGrid->makeEmptyMap();
+    bufferGrid->makeEmptyMap(); // makes bufferGrid empty
     for (int i = 0; i < smallerGrid->getNumRows(); ++i) {
         for (int j = 0; j < smallerGrid->getNumColumns(); ++j) {
+            // fills the inner part of the bufferGrid (non-edge cells) with the smallerGrid Map parameter
             bufferGrid->updateGrid(i+1, j+1, smallerGrid->getGridElement(i,j));
         }
     }
 
-    // Handle corners
+    // Wraps each of the opposite corners' value to the opposite corner in the bufferGrid
     bufferGrid->updateGrid(0, 0, bufferGrid->getGridElement(bufferGrid->getNumRows() - 2, bufferGrid->getNumColumns() - 2)); // top left corner
     bufferGrid->updateGrid(0, bufferGrid->getNumColumns() - 1, bufferGrid->getGridElement(bufferGrid->getNumRows() - 2, 1)); // top right corner
     bufferGrid->updateGrid(bufferGrid->getNumRows() - 1, 0, bufferGrid->getGridElement(1, bufferGrid->getNumColumns() - 2)); // bottom left corner
     bufferGrid->updateGrid(bufferGrid->getNumRows() - 1, bufferGrid->getNumColumns() - 1, bufferGrid->getGridElement(1, 1)); // bottom right corner
 
+    // copies the opposite columns' values to the opposite column in the bufferGrid (excluding corners)
     for (int i = 1; i < bufferGrid->getNumRows() - 1; ++i) {
         bufferGrid->updateGrid(i, 0, bufferGrid->getGridElement(i, bufferGrid->getNumColumns() - 2));
         bufferGrid->updateGrid(i, bufferGrid->getNumColumns() - 1, bufferGrid->getGridElement(i, 1));
     }
 
+    // copies the opposite rows' values to the opposite rows in the bufferGrid (excluding corners)
     for (int i = 1; i < bufferGrid->getNumColumns() - 1; ++i) {
         bufferGrid->updateGrid(0, i, bufferGrid->getGridElement(bufferGrid->getNumRows() - 2, i));
         bufferGrid->updateGrid(bufferGrid->getNumRows() - 1, i, bufferGrid->getGridElement(1, i));
