@@ -32,8 +32,6 @@ class GenericGame{
         // counts the number of neighbors of cells that are not on the edge of the Map - helper function to createNextGen and uses bufferGrid
         int countInternalNeighbors(int rowNum, int columnNum) const;
 
-
-        unsigned int currGen; // counter to check how many generations we are in
         // The 4 maps below keeps track of the last four generations, so that if it stabilizes, we can end the game
         Map* mGenOne;
         Map* mGenTwo;

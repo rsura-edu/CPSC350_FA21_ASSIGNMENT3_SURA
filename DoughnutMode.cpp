@@ -11,22 +11,45 @@
 
 using namespace std;
 
+/**
+ * Default constructor:
+ * Creates a doughnut mode simulation where the starting map is a default 7 x 7 map with a population density of 0.5
+ */
 DoughnutMode::DoughnutMode() : GenericGame::GenericGame(){
     createNextGen(mGenOne, mGenTwo);
     createNextGen(mGenTwo,mGenThree);
     createNextGen(mGenThree,mGenFour);
 }
 
+/**
+ * Overloaded constructor:
+ * Creates a doughnut mode simulation where the starting map is a map with given dimensions and a given population density
+ *
+ * @param an unsigned int representing number of rows
+ * @param an unsigned int representing number of columns
+ * @param a double representing population density
+ */
 DoughnutMode::DoughnutMode(unsigned int numRows, unsigned int numColumns, double popDensity) : GenericGame::GenericGame(numRows, numColumns, popDensity){
     createNextGen(mGenOne, mGenTwo);
     createNextGen(mGenTwo,mGenThree);
     createNextGen(mGenThree,mGenFour);
 }
+
+/**
+ * Overloaded constructor:
+ * Creates a doughnut mode simulation from a file that represents the starting map of generation 0
+ *
+ * @param a string representing the file name
+ */
 DoughnutMode::DoughnutMode(string fileName) : GenericGame::GenericGame(fileName){
     createNextGen(mGenOne, mGenTwo);
     createNextGen(mGenTwo,mGenThree);
     createNextGen(mGenThree,mGenFour);
 }
+
+/**
+ * Destructor - deleting all the maps of the last four generations and the buffered grid
+ */
 DoughnutMode::~DoughnutMode(){
     delete mGenOne;
     delete mGenTwo;
@@ -35,6 +58,11 @@ DoughnutMode::~DoughnutMode(){
     delete bufferGrid;
 }
 
+/**
+ * Creates the buffered grid of a Map based on the rules of doughnut mode
+ *
+ * @param a Map
+ */
 void DoughnutMode::generateBufferedGrid(Map*& smallerGrid) const{
     bufferGrid->makeEmptyMap();
     for (int i = 0; i < smallerGrid->getNumRows(); ++i) {
