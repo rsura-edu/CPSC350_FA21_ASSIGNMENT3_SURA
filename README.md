@@ -24,7 +24,7 @@ README for Assignment 3
     - (Note: Not an error, but I want to mention that I also accounted for oscillations using 4 consecutive maps, which Josh said is extra credit to detect it: https://fse-students.slack.com/archives/C02D15PUA4U/p1634599258261300 )
 
 4)  References:
-    - Worked with Shree Murthy
+    - Worked with Shree Murthy (bounced ideas off each other, but didn't code together: we worked separately but ideated methods together)
     - https://learn.zybooks.com/zybook/CHAPMANCPSC298GermanWinter2021/chapter/7/section/14
     - https://learn.zybooks.com/zybook/CHAPMANCPSC298GermanWinter2021/chapter/10/section/6
     - https://playgameoflife.com/
