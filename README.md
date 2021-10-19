@@ -21,6 +21,7 @@ README for Assignment 3
     - MirrorMode.cpp
 
 3)  Known compile or runtime errors: N/A
+    - (Note: Not an error, but I want to mention that I also accounted for oscillations using 4 consecutive maps, which Josh said is extra credit to detect it: https://fse-students.slack.com/archives/C02D15PUA4U/p1634599258261300 )
 
 4)  References:
     - Worked with Shree Murthy
